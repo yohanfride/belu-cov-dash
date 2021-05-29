@@ -5,7 +5,7 @@
                 <div class="col">
                     <h4>
                         <i class="icon-edit"></i>
-                        Tambah Kasus Covid-19
+                        Tambah Vaksinasi Covid-19
                     </h4>
                 </div>
             </div>
@@ -18,7 +18,7 @@
                         <a style="padding: .5rem;" class="nav-link active" href="#"><i style="padding-right: 0px;" class="icon icon-keyboard_arrow_right"></i></a>
                     </li>
                     <li class="nav-item">
-                        <a style="padding: .5rem;" class="nav-link" href="<?= base_url(); ?>user"><i style="padding-right: 5px;" class="icon icon-users"></i>Tampilan Tabel Kasus Covid-19</a>
+                        <a style="padding: .5rem;" class="nav-link" href="<?= base_url(); ?>vaksin"><i style="padding-right: 5px;" class="icon icon-users"></i>Tampilan Tabel Vaksinasi Covid-19</a>
                     </li>
                     <li class="nav-item">
                         <a style="padding: .5rem;" class="nav-link active" href="#"><i style="padding-right: 0px;" class="icon icon-keyboard_arrow_right"></i></a>
@@ -39,7 +39,7 @@
                     <div class="card">
 
                         <div class="card-body b-b">
-                            <h4>Form Tambah Kasus Covid-19</h4>
+                            <h4>Form Tambah Vaksinasi Covid-19</h4>
                             <?php if($error){ ?>
                                 <div class="alert alert-danger alert-dismissible" role="alert">
                                     <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true" style="font-size: 14px;">&#10006;</span>
@@ -60,50 +60,13 @@
                                     <div class="form-group">
                                         <label for="inputName" class="col-form-label">Nama</label>
                                         <input type="text" class="form-control" id="inputName" placeholder="Type Name"  name="name" required>
-                                    </div>
+                                    </div>                                    
                                     <div class="form-group">
-                                        <label for="inputPhone" class="col-form-label">Tanggal Awal Pemantauan</label>
-                                        <div class="input-group focused">
-                                            <input type="text" class="date-time-picker form-control" data-options="{&quot;timepicker&quot;:false, &quot;format&quot;:&quot;Y-m-d&quot;}" name="date_add" placeholder="Tahun - Bulan - Tanggal (yyyy-mm-dd)" value="<?= date("Y-m-d"); ?>">
-                                            <span class="input-group-append">
-                                                <span class="input-group-text add-on white">
-                                                    <i class="icon-calendar"></i>
-                                                </span>
-                                            </span>
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="inputName" class="col-form-label">Status Pemantauan <span class="text-danger small ml-3">*)Data dimasukkan ke proses rekapitulasi</span> </label>
-                                        <select id="inputState" class="form-control" name="jenis_kelamin" id="jenis_kelamin" required>
-                                            <option value="laki-laki">Aktif (Data Dalam Pemantauan)</option>
-                                            <option value="perempuan">Tidak Aktif (Data Tidak Dalam Pemantauan)</option>
-                                        </select>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="inputName" class="col-form-label">Kondisi</label>
-                                        <select  class="form-control" name="level" id="level" required>
-                                            <option value="terkonfirmasi"  >Terkonfirmasi</option>
-                                            <option value="suspek"  >Suspek</option>
-                                            <option value="probable" >Probable</option>
-                                            <option value="kontak_erat" >Kontak Erat</option>
-                                            <option value="pelaku_perjalanan" >Pelaku Perjalanan</option>
-                                        </select>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="inputPhone" class="col-form-label">Status</label>
-                                        <select class="form-control" name="level_status" id="level_status" required>
-                                        <?php 
-                                            $list = $level_status['terkonfirmasi'];  
-                                            foreach($list as $l){ ?>
-                                            <option value="<?= $l?>"><?= $l?></option>
-                                        <?php } ?>
-                                        </select>
-                                    </div>
-                                    <div class="form-group" id="form_gejala">
-                                        <label for="inputName" class="col-form-label">Status Konfirmasi</label>
-                                        <select  class="form-control" name="gejala" id="gejala" >
-                                            <option value="Dengan Gejala"  >Dengan Gejala</option>
-                                            <option value="Tanpa Gejala"  >Tanpa Gejala</option>
+                                        <label for="inputName" class="col-form-label">Kelompok</label>
+                                        <select  class="form-control" name="kelompok" id="kelompok" required>
+                                            <?php foreach ($kelompok_status as $value) { ?>
+                                                    <option value="<?= $value; ?>" ><?= $value; ?></option>    
+                                            <?php } ?>    
                                         </select>
                                     </div>
                                     <div class="form-group">
@@ -131,10 +94,6 @@
                                     <div class="form-group">
                                         <label for="inputPhone" class="col-form-label">No. Telp.</label>
                                         <input type="text" class="form-control" id="inputPhone" placeholder="Phone"  name="phone"  >
-                                    </div> 
-                                    <div class="form-group">
-                                        <label for="inputPhone" class="col-form-label">Keluhan</label>
-                                        <textarea class="form-control r-0" id="exampleFormControlTextarea2" rows="3" style="resize: none;" name="keluhan"  required></textarea>
                                     </div>  
                                 </div>
                                 <div class="col-md-6">
@@ -155,14 +114,37 @@
                                         </select>
                                     </div>
                                     <div class="form-group">
-                                        <label for="inputPhone" class="col-form-label">Puskesmas</label>
-                                        <input type="text" class="form-control" id="puskesmas" placeholder="Puskesmas"  name="puskesmas" >
+                                        <label for="inputPhone" class="col-form-label">Faskes Vaksinasi</label>
+                                        <input type="text" class="form-control" id="faskes" placeholder="Faskes Vaksinasi"  name="faskes" required>
                                     </div>
                                     <div class="form-group">
                                         <label for="inputPhone" class="col-form-label">Alamat</label>
                                         <textarea class="form-control r-0" id="exampleFormControlTextarea2" rows="2" style="resize: none;" name="alamat"  required></textarea>
                                     </div>
                                     <div class="form-group">
+                                        <label for="inputPhone" class="col-form-label">Tanggal Vaksinasi Tahap 1</label>
+                                        <div class="input-group focused">
+                                            <input type="text" class="date-time-picker form-control" data-options="{&quot;timepicker&quot;:false, &quot;format&quot;:&quot;Y-m-d&quot;}" name="tgl_vaksinasi1" placeholder="Tahun - Bulan - Tanggal (yyyy-mm-dd)" value="<?= date("Y-m-d"); ?>" required>
+                                            <span class="input-group-append">
+                                                <span class="input-group-text add-on white">
+                                                    <i class="icon-calendar"></i>
+                                                </span>
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="inputPhone" class="col-form-label">Tanggal Vaksinasi Tahap 2</label>
+                                        <div class="input-group focused">
+                                            <input type="text" class="date-time-picker form-control" data-options="{&quot;timepicker&quot;:false, &quot;format&quot;:&quot;Y-m-d&quot;}" name="tgl_vaksinasi2" placeholder="Tahun - Bulan - Tanggal (yyyy-mm-dd)" >
+                                            <span class="input-group-append">
+                                                <span class="input-group-text add-on white">
+                                                    <i class="icon-calendar"></i>
+                                                </span>
+                                            </span>
+                                        </div>
+                                    </div>
+
+                                    <!-- <div class="form-group">
                                         <label for="inputPhone" class="col-form-label">
                                             Lokasi 
                                             <button class="btn btn-sm btn-success" type="button" onclick="getmylocation()" style="position: absolute; right: 1px; top: 35px; z-index: 100;">Lokasi Saya</button> 
@@ -170,11 +152,8 @@
                                         <div id="map" style="min-width: 400px; width: 100%; min-height: 195px; z-index: 1;"></div>
                                         <input type="hidden" class="form-control" id="location-lat"  name="loc_lat">
                                         <input type="hidden" class="form-control" id="location-lng"  name="loc_long">
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="inputPhone" class="col-form-label">Riwayat Perjalanan</label>
-                                        <textarea class="form-control r-0" id="exampleFormControlTextarea2" rows="3" style="resize: none;" name="riwayat_perjalanan"  required></textarea>
-                                    </div>
+                                    </div> -->
+
                                 </div>
                             </div> 
                             <button type="submit" class="btn btn-primary" name="save" value="save">Tambah</button>
@@ -193,26 +172,10 @@
 <script src="https://npmcdn.com/leaflet@1.0.0-rc.2/dist/leaflet.js"></script>
 
 <script>
-    level_status = JSON.parse('<?php echo JSON_encode($level_status);?>');
-    console.log(level_status);
+
     kecamatan = JSON.parse('<?php echo JSON_encode($kecamatan);?>');
     console.log(kecamatan);
 
-    $("#level").on('change', function() {
-        var level = $(this).find(":selected").val();
-        var level_item = level_status[level];
-        var i;
-        var text='';
-        for (i = 0; i < level_item.length; i++) {
-          text += '<option value="'+level_item[i]+'" >'+level_item[i]+'</option>';
-        }
-        $("#level_status").html(text);
-        if(level == 'terkonfirmasi'){
-            $("#form_gejala").show();
-        } else {
-            $("#form_gejala").hide();
-        }
-    });
     $("#kecamatan").on('change', function() {
         var level = $(this).find(":selected").val();
         var level_item = kecamatan[level];
@@ -227,7 +190,7 @@
         navigator.geolocation.getCurrentPosition(onSuccess, onError, {timeout:10000}); 
     });
 </script>
-<script type="text/javascript">
+<!-- <script type="text/javascript">
     var map,marker,geocodeService;
     
     function initMaps(center){
@@ -285,6 +248,5 @@
             //alert("Sistem tidak dapat mengakes sensor GPS Anda");
         }, {maximumAge:60000, timeout: 2000}); //{timeout:10000}
     }
-   
-</script>
+</script> -->
 

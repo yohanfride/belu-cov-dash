@@ -280,6 +280,40 @@
                     </li>
                 </ul>
             </li>
+            <li class="treeview"><a href="#"><i class="icon icon-users blue-text s-18"></i>Vaksinasi Covid-19<i
+                    class="icon icon-angle-left s-18 pull-right"></i></a>
+                <ul class="treeview-menu">
+                    <li><a href="<?=base_url();?>vaksin/add"><i class="icon icon-add"></i>Tambah Vaksinasi Covid-19</a>
+                    </li>
+                    <?php if($user_now->name =='master-admin1'){ ?>
+                    <li><a href="<?=base_url();?>vaksin/import"><i class="icon icon-file-excel-o"></i>Import Excel Vaksinasi Covid-19</a>
+                    </li>
+                    <?php } ?>
+                    <li><a href="<?=base_url();?>vaksin/"><i class="icon icon-document-table"></i>Tampilan Tabel</a>
+                    </li>
+                    <!-- <li><a href="<?=base_url();?>vaksin/maps"><i class="icon icon-map"></i>Tampilan Peta</a>
+                    </li> -->
+                    <li><a href="<?=base_url();?>vaksin/grafik"><i class="icon icon-show_chart"></i>Grafik Trend Vaksinasi Covid-19</a>
+                    </li>
+                </ul>
+            </li>
+            <li class="treeview"><a href="#"><i class="icon icon-users blue-text s-18"></i>Tes Covid-19<i
+                    class="icon icon-angle-left s-18 pull-right"></i></a>
+                <ul class="treeview-menu">
+                    <li><a href="<?=base_url();?>tes/add"><i class="icon icon-add"></i>Tambah Tes Covid-19</a>
+                    </li>
+                    <?php if($user_now->name =='master-admin1'){ ?>
+                    <li><a href="<?=base_url();?>tes/import"><i class="icon icon-file-excel-o"></i>Import Excel Tes Covid-19</a>
+                    </li>
+                    <?php } ?>
+                    <li><a href="<?=base_url();?>tes/"><i class="icon icon-document-table"></i>Tampilan Tabel</a>
+                    </li>
+                    <!-- <li><a href="<?=base_url();?>vaksin/maps"><i class="icon icon-map"></i>Tampilan Peta</a>
+                    </li> -->
+                    <li><a href="<?=base_url();?>tes/grafik"><i class="icon icon-show_chart"></i>Grafik Trend Tes Covid-19</a>
+                    </li>
+                </ul>
+            </li>
             <li class="treeview">
                 <a href="#">
                     <i class="icon icon-qrcode text-lime s-18"></i> <span>QR Code</span>

@@ -174,16 +174,14 @@
 <script type="text/javascript">
     jQuery(function($){
         var chartColors ={
-            orange:"#ffa000",
-            blue:"#42a5f5",
-            purple:"#8e24aa",
+            orange:"#42a5f5",
+            blue:"#fdd835",
+            purple:"#ffa000",
             red:"#ef5350",
-            yellow:"#fdd835",
           }
          <?php  
             $hari = array(); 
             $summary_kontak_erat = array(); $summary_probable = array(); $summary_suspek = array(); $summary_konfirmasi = array();
-            $summary_pelaku_perjalanan = array();
             $kontak_erat_dipantau = array(); $kontak_erat_selesai_dipantau = array();
             $probable_isolasi = array(); $probable_selesai_isolasi = array(); $probable_meninggal = array();
             $suspek_isolasi = array(); $suspek_selesai_isolasi = array(); $suspek_meninggal = array();
@@ -247,11 +245,11 @@
 
             var kasustotal = {
               series: [{
-                      name: 'Pelaku Perjalanan',
+                      name: 'Kontak Erat',
                       type: 'line',
                       data: [<?= implode(',', $summary_kontak_erat); ?>]
-                  },{
-                      name: 'Kontak Erat',
+                  }, {
+                      name: 'Pelaku Perjalanan',
                       type: 'line',
                       data: [<?= implode(',', $summary_kontak_erat); ?>]
                   },{
@@ -274,7 +272,7 @@
                   type: 'line',
                   stacked: false,
               },
-              colors: [chartColors.purple,chartColors.blue,chartColors.yellow,chartColors.orange,chartColors.red],
+              colors: [chartColors.orange, chartColors.blue, chartColors.purple, chartColors.red],
               plotOptions: {
                   bar: {
                       columnWidth: '50%'
@@ -282,7 +280,7 @@
               },
 
               fill: {
-                  colors: [chartColors.purple,chartColors.blue,chartColors.yellow,chartColors.orange,chartColors.red],
+                  colors: [chartColors.orange, chartColors.blue, chartColors.purple, chartColors.red],
                   opacity: [0.85, 0.25, 1],
                   gradient: {
                       inverseColors: false,
@@ -321,7 +319,7 @@
                       height: 12,
                       strokeWidth: 0,
                       //strokeColor: '#fff',
-                      fillColors: [chartColors.purple,chartColors.blue,chartColors.yellow,chartColors.orange,chartColors.red],
+                      fillColors: [chartColors.orange, '#ab47bc', chartColors.blue, chartColors.purple, chartColors.red],
                       radius: 12,
                       customHTML: undefined,
                       onClick: undefined,

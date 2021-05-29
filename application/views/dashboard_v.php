@@ -401,13 +401,15 @@
                                                     <td><?= date( "H:i:s", strtotime( $s->date_add)) ?></td>
                                                     <td>
                                                         <?php if(strtoupper($s->level) == "terkonfirmasi"){ ?>
-                                                        <span class="badge badge-primary red lighten-1 r-20" style="font-size: 12px;">terkonfirmasi</span>
+                                                        <span class="badge badge-primary red lighten-1 r-20" style="font-size: 12px;">Terkonfirmasi</span>
                                                         <?php } else if(strtoupper($s->level) == "suspek"){ ?>
-                                                        <span class="badge badge-primary purple darken-1 r-20" style="font-size: 12px;">suspek</span>
+                                                        <span class="badge badge-primary amber darken-2 r-20" style="font-size: 12px;">Suspek</span>
                                                         <?php } else if(strtoupper($s->level) == "probable"){ ?>
-                                                        <span class="badge badge-primary blue lighten-1 r-20" style="font-size: 12px;">probable</span>
+                                                        <span class="badge badge-primary yellow lighten-1 r-20" style="font-size: 12px;">Probable</span>
                                                         <?php } else if(strtoupper($s->level) == "kontak_erat"){ ?>
-                                                        <span class="badge badge-primary amber darken-2 r-20" style="font-size: 12px;">kontak_erat</span>
+                                                        <span class="badge badge-primary blue lighten-1 r-20" style="font-size: 12px;">Kontak Erat</span>
+                                                        <?php } else if(strtoupper($s->level) == "pelaku_perjalanan"){ ?>
+                                                        <span class="badge badge-primary purple darken-1 r-20" style="font-size: 12px;">Pelaku Perjalan</span>
                                                         <?php } ?>
                                                     </td>
                                                 </tr>
@@ -450,31 +452,34 @@
 <script type="text/javascript">
     jQuery(function($){
         var chartColors ={
-        orange:"#42a5f5",
-        blue:"#fdd835",
-        purple:"#ffa000",
+        orange:"#ffa000",
+        blue:"#42a5f5",
+        purple:"#8e24aa",
         red:"#ef5350",
+        yellow:"#fdd835",
       }
       <?php  
         $kecamatan = array(); 
-        $kec_kontak_erat = array(); $kec_probable = array(); $kec_suspek = array(); $kec_terkonfirmasi = array();
+        $kec_kontak_erat = array(); $kec_probable = array(); $kec_suspek = array(); $kec_terkonfirmasi = array();$kec_pelaku_perjalanan = array();
         foreach($new->kecamatan as $kec_key => $kec_value){
           $kecamatan[] = $kec_key;
           $kec_kontak_erat[] = $kec_value->kontak_erat;
           $kec_probable[] = $kec_value->probable;
           $kec_suspek[] = $kec_value->suspek;
           $kec_terkonfirmasi[] = $kec_value->terkonfirmasi;
+          $kec_pelaku_perjalanan[] = $kec_value->pelaku_perjalanan;
         }
       ?> 
       
       var options = {
         series: [
+          { name: 'Kasus Pelaku Perjalan',data: [<?= implode(',', $kec_pelaku_perjalanan); ?>]}, 
           { name: 'Kasus Kontak Erat',data: [<?= implode(',', $kec_kontak_erat); ?>]}, 
           { name: 'Kasus Probable',data: [<?= implode(',', $kec_probable); ?>]},
           { name: 'Kasus Suspek',data: [<?= implode(',', $kec_suspek); ?>]}, 
           { name: 'Kasus terkonfirmasi Positif',data: [<?= implode(',', $kec_terkonfirmasi); ?>]}
         ],
-        colors:[chartColors.orange,chartColors.blue,chartColors.purple,chartColors.red],
+        colors:[chartColors.purple,chartColors.blue,chartColors.yellow,chartColors.orange,chartColors.red],
         chart: {
           type: 'bar',
           height: 430

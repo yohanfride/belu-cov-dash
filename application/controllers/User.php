@@ -23,10 +23,17 @@ class User extends CI_Controller {
 			if ($this->form_validation->run() == FALSE){
 				$data['error'] = validation_errors();
 			} else{
-				if($this->input->post('level') == 'konfirmasi'){
+				if($this->input->post('level') == 'terkonfirmasi'){
 					$gejala = $this->input->post('gejala');
 				} else {
 					$gejala = '';
+				}
+				$date_add = $this->input->post('date_add');
+
+				if($this->input->post('level') != 'terkonfirmasi'){
+					$date_end =  date( 'Y-m-d', strtotime("+14 days",strtotime($date_add)));
+				} else {
+					$date_end =date( 'Y-m-d', strtotime("+500 days",strtotime($date_add)));
 				}
 				$input=array(
 					'level' => $this->input->post('level'),
@@ -45,7 +52,9 @@ class User extends CI_Controller {
 					'puskesmas' => $this->input->post('puskesmas'),
 					'loc_lat' => $this->input->post('loc_lat'),
 					'loc_long' => $this->input->post('loc_long'),
-					'keluhan' =>  $this->input->post('keluhan')
+					'keluhan' =>  $this->input->post('keluhan'),
+					'tgl_pemantauan_start' => $date_add,
+					'tgl_pemantauan_end' => $date_end
 				);
 				$respo = $this->user_m->add($input);
 				if($respo->is_success){	
@@ -56,7 +65,7 @@ class User extends CI_Controller {
 		    }
 		}	
 		$data['level_status'] = array(
-			"terkonfirmasi" => ["Dirawat", "Pengawasan" ,"Sembuh", "Meninggal","Dengan Gejala", "Tanpa Gejala"],
+			"terkonfirmasi" => ["Dirawat", "Pengawasan" ,"Sembuh", "Meninggal"],
 			"suspek" => ["Isolasi", "Selesai Isolasi", "Meninggal"],
 			"probable" => ["Isolasi", "Selesai Isolasi", "Meninggal"],
 			"kontak_erat" => ["Isolasi", "Selesai Isolasi"],
@@ -79,10 +88,16 @@ class User extends CI_Controller {
 		$data['error']='';
 		$data['title']='Ubah User';
 		if($this->input->post('save')){
-			if($this->input->post('level') == 'konfirmasi'){
+			if($this->input->post('level') == 'terkonfirmasi'){
 				$gejala = $this->input->post('gejala');
 			} else {
 				$gejala = '';
+			}
+			$date_add = $this->input->post('date_add');
+			if($this->input->post('level') != 'terkonfirmasi'){
+				$date_end =  date( 'Y-m-d', strtotime("+14 days",strtotime($date_add)));
+			} else {
+				$date_end =date( 'Y-m-d', strtotime("+500 days",strtotime($date_add)));
 			}
 			$input=array(
 				'level' => $this->input->post('level'),
@@ -101,7 +116,9 @@ class User extends CI_Controller {
 				'status_pantau' => $this->input->post('status_pantau'),
 				'puskesmas' => $this->input->post('puskesmas'),
 				'riwayat_perjalanan' =>  $this->input->post('riwayat_perjalanan'),
-				'keluhan' =>  $this->input->post('keluhan')
+				'keluhan' =>  $this->input->post('keluhan'),
+				'tgl_pemantauan_start' => $date_add,
+				'tgl_pemantauan_end' => $date_end
 			);
 			$respo = $this->user_m->edit($id,$input);
 			if($respo->is_success){				
@@ -115,7 +132,7 @@ class User extends CI_Controller {
 			$data['error']='Tidak ada data';
 		}	
 		$data['level_status'] = array(
-			"terkonfirmasi" => ["Dirawat", "Pengawasan" ,"Sembuh", "Meninggal","Dengan Gejala", "Tanpa Gejala"],
+			"terkonfirmasi" => ["Dirawat", "Pengawasan" ,"Sembuh", "Meninggal"],
 			"suspek" => ["Isolasi", "Selesai Isolasi", "Meninggal"],
 			"probable" => ["Isolasi", "Selesai Isolasi", "Meninggal"],
 			"kontak_erat" => ["Isolasi", "Selesai Isolasi"],
@@ -182,7 +199,7 @@ class User extends CI_Controller {
 		}
 
 		$data['level_status'] = array(
-			"terkonfirmasi" => ["Dirawat", "Pengawasan" ,"Sembuh", "Meninggal","Dengan Gejala", "Tanpa Gejala"],
+			"terkonfirmasi" => ["Dirawat", "Pengawasan" ,"Sembuh", "Meninggal"],
 			"suspek" => ["Isolasi", "Selesai Isolasi", "Meninggal"],
 			"probable" => ["Isolasi", "Selesai Isolasi", "Meninggal"],
 			"kontak_erat" => ["Isolasi", "Selesai Isolasi"],
@@ -221,7 +238,7 @@ class User extends CI_Controller {
 		}
 
 		$data['level_status'] = array(
-			"terkonfirmasi" => ["Dirawat", "Pengawasan" ,"Sembuh", "Meninggal","Dengan Gejala", "Tanpa Gejala"],
+			"terkonfirmasi" => ["Dirawat", "Pengawasan" ,"Sembuh", "Meninggal"],
 			"suspek" => ["Isolasi", "Selesai Isolasi", "Meninggal"],
 			"probable" => ["Isolasi", "Selesai Isolasi", "Meninggal"],
 			"kontak_erat" => ["Isolasi", "Selesai Isolasi"],
@@ -302,7 +319,7 @@ class User extends CI_Controller {
 		}
 
 		$data['level_status'] = array(
-			"terkonfirmasi" => ["Dirawat", "Pengawasan" ,"Sembuh", "Meninggal","Dengan Gejala", "Tanpa Gejala"],
+			"terkonfirmasi" => ["Dirawat", "Pengawasan" ,"Sembuh", "Meninggal"],
 			"suspek" => ["Isolasi", "Selesai Isolasi", "Meninggal"],
 			"probable" => ["Isolasi", "Selesai Isolasi", "Meninggal"],
 			"kontak_erat" => ["Isolasi", "Selesai Isolasi"],
@@ -377,7 +394,7 @@ class User extends CI_Controller {
 		}
 
 		$data['level_status'] = array(
-			"terkonfirmasi" => ["Dirawat", "Pengawasan" ,"Sembuh", "Meninggal","Dengan Gejala", "Tanpa Gejala"],
+			"terkonfirmasi" => ["Dirawat", "Pengawasan" ,"Sembuh", "Meninggal"],
 			"suspek" => ["Isolasi", "Selesai Isolasi", "Meninggal"],
 			"probable" => ["Isolasi", "Selesai Isolasi", "Meninggal"],
 			"kontak_erat" => ["Isolasi", "Selesai Isolasi"],
@@ -519,6 +536,51 @@ class User extends CI_Controller {
 		// echo "</pre>";
 		// exit();
 		$this->load->view('user_graph_v', $data);
+	}
+
+	public function grafik2(){
+		$data=array();
+		$data['success']='';
+		$data['error']='';
+		$data['user_now'] = $this->session->userdata('covid-admin');
+
+		$data['title']='Tren Grafik - Pasien Covid-19';
+		$data['str_date'] = '';
+		$data['end_date'] = '';
+		$data['kec'] = '';
+		if($this->input->get('str')){
+			$data['str_date'] = $this->input->get('str');
+		}
+		if($this->input->get('end')){
+			$data['end_date'] = $this->input->get('end');
+		}
+
+		if(!empty($data['str_date']) && !empty($data['str_date']) ){
+			$query2 = array(
+				"str_date" => $data['str_date'],
+				"end_date" => $data['end_date'],
+				'sort'=>'date_add'
+			);
+			$data['dailes'] = $this->daily_m->search($query2)->data;	
+		} else {
+			$data['str_date'] = date("Y-m-d");
+			$data['end_date'] = date("Y-m-d");
+		}
+		if($this->input->get('kec')){
+			$data['kec'] = $this->input->get('kec');
+		}	
+		if($data['user_now']->level != 'admin' && $data['user_now']->level != 'master-admin' && $data['user_now']->level != 'pusat'){
+			$data['kec'] =  $data['user_now']->level;
+		} else {
+			$data['pusat'] = true;
+		}
+		$json = file_get_contents('./data-sampang.json');
+		$data['kecamatan'] = json_decode($json,true);	
+		// echo "<pre>";
+		// print_r($data);
+		// echo "</pre>";
+		// exit();
+		$this->load->view('user_graph_v2', $data);
 	}
 
 	public function import(){
@@ -679,7 +741,21 @@ class User extends CI_Controller {
 		foreach($sheet as $row){
             if($numrow >= $start_row){
 				$item['level'] = strtolower($row['P']) ;
-				$item['level_status'] = $row['S'];
+				$item['level'] = str_replace(' ','_',$item['level']) ;
+				$item['level_status'] = ucwords(strtolower($row['S'])); 
+				
+				if($item['level_status'] == "Selesai Dipantau"){
+					$item['level_status'] = 'Selesai Isolasi';
+				}
+
+				if($item['level_status'] == "Baik"){
+					$item['level_status'] = 'Selesai Isolasi';
+				}
+
+				if($item['level_status'] == "Dalam Pemantauan"){
+					$item['level_status'] = 'Isolasi';
+				}
+
 				if($item['level_status']){
 					if($item['level_status'] == 'Selesai Isolasi' || $row['T']){
 						$item['status'] = 0;
@@ -687,7 +763,7 @@ class User extends CI_Controller {
 						$item['status'] = 1;
 					}
 				} else {
-					if($item['level'] == 'probable' || $item['level'] == 'kontak erat' || $item['level'] == 'pelaku perjalanan'|| $item['level'] == 'suspek'){
+					if($item['level'] == 'probable' || $item['level'] == 'kontak_erat' || $item['level'] == 'pelaku_perjalanan'|| $item['level'] == 'suspek'){
 						if($row['T']){
 							$item['status'] = 0;
 							$item['level_status'] = 'Selesai Isolasi';
@@ -711,32 +787,54 @@ class User extends CI_Controller {
 				else 
 					$item['jenis_kelamin'] = '-';
 
-				$item['kecamatan'] = $row['H'] ;
-				$item['kelurahan'] = $row['I'];
+				$item['kecamatan'] = ucwords(strtolower($row['H']));
+				$item['kelurahan'] = ucwords(strtolower($row['I']));
 				$item['puskesmas'] = $row['L'];
 				$item['alamat'] = $row['G'];
 				$item['tgl_lahir'] = '';
 				$item['umur'] =  strtolower($row['D']);
 				$item['phone'] = '-';
 				$item['riwayat_perjalanan'] = ($row['M'] != '')?$row['M']:$row['N'];
+				
 				$item['loc_lat'] = $row['Q'];
 				$item['loc_long'] = $row['R'];
-				if($row['K'])
-					$item['date_add'] = date("Y-m-d",strtotime(str_replace('/', '-', $row['K'])));
-				else 
-					$item['date_add'] = '';
 
-				if($row['U'])
-					$item['date_end'] = date("Y-m-d",strtotime(str_replace("'","", $row['U'])));
-				else 
-					$item['date_add'] = '';
-
-				$item['keluhan'] = $row['O'];
-				if(!$item['keluhan']){
-					$item['konfirmasi_gejala'] == 'Tanpa Gejala';
-				} else {
-					$item['konfirmasi_gejala'] == 'Dengan Gejala';
+				if(!$item['loc_lat']){
+					$item['loc_lat'] = ( rand(1,2000) - 1000 ) / 1000000 + $loc ;
+					$item['loc_long'] = ( rand(1,2000) - 1000 ) / 1000000 + $lng ;
 				}
+
+				// if($row['K'])
+				// 	$item['date_add'] = date("Y-m-d",strtotime(str_replace('/', '-', $row['K'])));
+				// else 
+				if($row['B'])
+					$item['date_add'] = date("Y-m-d",strtotime(str_replace('/', '-', $row['B'])));
+				else 
+					$item['date_add'] = '';
+
+				
+				if($item['level'] == 'probable' || $item['level'] == 'kontak_erat' || $item['level'] == 'pelaku_perjalanan'|| $item['level'] == 'suspek'){
+					/*if($row['U'])
+						$item['date_end'] = date("Y-m-d",strtotime(str_replace("'","", $row['U'])));
+					else*/ if($item['status'] == 0) 
+						$item['date_end'] =  date( 'Y-m-d', strtotime("+14 days",strtotime($item['date_add'])));
+					else 
+						$item['date_end'] =date( 'Y-m-d', strtotime("+500 days",strtotime(date("Y-m-d"))));
+				} else {
+					if($item['status'] == 1)
+						$item['date_end'] =date( 'Y-m-d', strtotime("+500 days",strtotime(date("Y-m-d"))));
+				}
+				
+				$item['keluhan'] = $row['O'];
+				if(!$this->cekkeluhan($item['keluhan'])){
+					$item['konfirmasi_gejala'] = 'Tanpa Gejala';
+				} else {
+					$item['konfirmasi_gejala'] = 'Dengan Gejala';
+				}
+				
+				$cek_kecamatan = $this->cekkecamatan($item['kecamatan']);
+				$cek_kelurahan = $this->cekkecamatan($item['kecamatan'],$item['kelurahan']);
+				// echo $row['C'].' '.$row['B'].' '.$row['K'].' - '.$item['kecamatan'].' - '.$item['kelurahan'].' - '.$item['date_add'].' - '.$item['date_end'].' kecamatan'.$cek_kecamatan.' -- kelurahan'.$cek_kelurahan.'<br/>';
 				$item['kode_import'] = $kode_import ;
                 array_push($data_excel,$item);
     		}
@@ -744,11 +842,50 @@ class User extends CI_Controller {
             if($numrow > $end_row)
             	break;
         }
-
+        // exit();
         $fp = fopen('assets/import-json/'.$kode_import.'.json', 'w');
 		fwrite($fp, json_encode($data_excel));
 		fclose($fp);
         return $data_excel;
+	}
+
+	function cekkeluhan($test){
+		$stat = false;
+		$penyakit = ['batuk','demam','pusing','pilek','meriang','pneumonia','bapil','nyeri','sesak','penciuman','sakit'];
+		$test = strtolower($test);
+		foreach($penyakit as $p){
+			if(strpos($test,$p)){
+				$stat = true;
+				break;
+			}
+		}
+		return $stat;
+	}
+
+	function cekkecamatan($kec){
+		$json = file_get_contents('data-sampang.json');
+		$kecamatan = json_decode($json,true);
+		$stat = 0;
+		foreach ($kecamatan['Kecamatan'] as  $value) {
+			if($value == $kec){
+				$stat = 1;
+				break;
+			}
+		}
+		return $stat;
+	}
+
+	function cekkeluarahan($kec,$kel){
+		$json = file_get_contents('data-sampang.json');
+		$kecamatan = json_decode($json,true);
+		$stat = 0;
+		foreach ($kecamatan[$kec] as  $value) {
+			if($value == $kel){
+				$stat = 1;
+				break;
+			}
+		}
+		return $stat;
 	}
 
 	public function ajax_add(){
@@ -769,21 +906,26 @@ class User extends CI_Controller {
 			'loc_lat' => $this->input->post('loc_lat'),
 			'loc_long' => $this->input->post('loc_long'),
 			'date_add' => $date_add,
+			'tgl_pemantauan_start' => $date_add,
+			'tgl_pemantauan_end' => $this->input->post('date_end'),
 			'keluhan' =>  $this->input->post('keluhan'),
 			'puskesmas' => $this->input->post('puskesmas'),
+			'konfirmasi_gejala' => $this->input->post('konfirmasi_gejala'),
 			'kode_import' => $this->input->post('kode_import')
 		);
-		if( $level == 'odp' || $level == 'odr' ){
-			$date_end = $this->input->post('date_end');	
-				if($date_end){
-				$date_end =  date( 'Y-m-d', strtotime("-6 days",strtotime($date_add)));
-				$input['date_end'] = $date_end;
-				$dateTimestamp1 = strtotime(date("Y-m-d")); 
-				$dateTimestamp2 = strtotime($date_end); 
-				if ($dateTimestamp1 > $dateTimestamp2) 
-					$input['status_pantau'] = false;
-			}
-		}
+
+		// if($item['level'] == 'probable' || $item['level'] == 'kontak erat' || $item['level'] == 'pelaku perjalanan'|| $item['level'] == 'suspek'){
+		// 	$date_end = $this->input->post('date_end');	
+		// 	if($date_end){
+		// 		$date_end =  date( 'Y-m-d', strtotime("-6 days",strtotime($date_add)));
+		// 		$input['date_end'] = $date_end;
+		// 		$dateTimestamp1 = strtotime(date("Y-m-d")); 
+		// 		$dateTimestamp2 = strtotime($date_end); 
+		// 		if ($dateTimestamp1 > $dateTimestamp2) 
+		// 			$input['status_pantau'] = false;
+		// 	}
+		// }
+
 		if( $this->input->post('status') == 0 ){
 			$input['status_pantau'] = $this->input->post('status');
 		}

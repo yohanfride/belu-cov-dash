@@ -5,7 +5,7 @@
                 <div class="col">
                     <h4>
                         <i class="icon-users"></i>
-                        Tampilan Tabel - Kasus Covid-19
+                        Tampilan Tabel - Vaksinasi Covid-19
                     </h4>
                 </div>
             </div>
@@ -18,7 +18,7 @@
                         <a style="padding: .5rem;" class="nav-link active" href="#"><i style="padding-right: 0px;" class="icon icon-keyboard_arrow_right"></i></a>
                     </li>
                     <li class="nav-item">
-                        <a style="padding: .5rem;" class="nav-link" href="#"><i style="padding-right: 5px;" class="icon icon-users"></i>Tampilan Tabel - Kasus Covid-19</a>
+                        <a style="padding: .5rem;" class="nav-link" href="#"><i style="padding-right: 5px;" class="icon icon-users"></i>Tampilan Tabel - Vaksinasi Covid-19</a>
                     </li>
                 </ul>
             </div>
@@ -32,53 +32,18 @@
                     <div class="card">
                         <form method="get" id="form-search">
                             <div class="card-body b-b">
-                                <h4>Form Cari Kasus Covid-19</h4>
+                                <h4>Form Cari Vaksinasi Covid-19</h4>
                                 <div class="row">
                                     <div class="col-md-4">
                                         <div class="form-group">
-                                            <label for="inputName" class="col-form-label">Kondisi</label>
-                                            <select  class="form-control" name="lvl" id="level" >
-                                                <option value="">-- Semua --</option>
-                                                <option value="terkonfirmasi" <?= (strtoupper($lvl) == "TERKONFIRMASI")?"selected":""; ?> >Terkonfirmasi</option>
-                                                <option value="suspek" <?= (strtoupper($lvl) == "SUSPEK")?"selected":""; ?> >Suspek</option>
-                                                <option value="probable" <?= (strtoupper($lvl) == "PROBABLE")?"selected":""; ?> >Probable</option>
-                                                <option value="kontak_erat" <?= (strtoupper($lvl) == "KONTAK_ERAT")?"selected":""; ?> >Kontak Erat</option>
-                                                <option value="pelaku_perjalanan" <?= (strtoupper($lvl) == "PELAKU_PERJALANAN")?"selected":""; ?> >Pelaku Perjalanan</option>
+                                            <label for="inputName" class="col-form-label">Kelompok</label>
+                                            <select  class="form-control" name="grup" id="level" >
+                                                <option value="" >-- Semua --</option>
+                                                <?php foreach ($kelompok_status as $value) { ?>
+                                                    <option value="<?= $value; ?>" <?= ( strtoupper($lvl) ==  strtoupper($value) )?"selected":""; ?> ><?= $value; ?></option>    
+                                                <?php } ?>
                                             </select>
                                         </div> 
-                                    </div>
-                                    <div class="col-md-4">
-                                        <div class="form-group">
-                                            <label for="inputPhone" class="col-form-label">Status</label>
-                                            <select class="form-control" name="lvlstat" id="level_status">
-                                            <option value="">-- Semua --</option>
-                                            <?php 
-                                                $list = array();
-                                                if((strtoupper($lvl) == "TERKONFIRMASI"))
-                                                    $list = $level_status['terkonfirmasi'];   
-                                                if((strtoupper($lvl) == "SUSPEK"))
-                                                    $list = $level_status['suspek'];
-                                                if((strtoupper($lvl) == "PROBABLE"))
-                                                    $list = $level_status['probable'];
-                                                if((strtoupper($lvl) == "KONTAK_ERAT"))
-                                                    $list = $level_status['kontak_erat'];
-                                                if((strtoupper($lvl) == "PELAKU_PERJALANAN"))
-                                                    $list = $level_status['pelaku_perjalanan'];
-                                                foreach($list as $l){ ?>
-                                                <option value="<?= $l?>" <?= ( $lvlstat == $l )?"selected":""; ?>><?= $l?></option>
-                                            <?php } ?>
-                                            </select>
-                                        </div>
-                                    </div> 
-                                    <div class="col-md-4" id="form_gejala">
-                                        <div class="form-group">
-                                            <label for="inputGejala" class="col-form-label">Konfirmasi Gejala</label>
-                                            <select  class="form-control" name="gejala" id="gejala" >
-                                                <option value="" >-- Semua --</option>
-                                                <option value="Dengan Gejala" <?= ($gejala == "Dengan Gejala")?"selected":""; ?> >Dengan Gejala</option>
-                                                <option value="Tanpa Gejala" <?= ($gejala == "Tanpa Gejala")?"selected":""; ?> >Tanpa Gejala</option>
-                                            </select>
-                                        </div>
                                     </div> 
                                 </div>
                                 <div class="row">   
@@ -142,7 +107,7 @@
                         <div class="card-body">
                         <div class="card-title">
                             <h4>Data Covid-19 <?php if($user_now->level != 'master-admin' && $user_now->level != 'admin'){ echo '- Kecamatan '.$user_now->level; } ?></h4> 
-                            <a href="<?= base_url()?>user/add" style="position: absolute; right:35px; top:15px;z-index: 1;">
+                            <a href="<?= base_url()?>vaksin/add" style="position: absolute; right:35px; top:15px;z-index: 1;">
                                 <button type="button" class="btn btn-primary r-20"><i class="icon-plus"></i> Tambah Data Baru</button>
                             </a>
                         </div>
@@ -187,26 +152,32 @@
                                                 <td><?= $s->nama ?></td>
                                                 <td><?= $s->jenis_kelamin ?></td>
                                                 <td style="text-align: center;">
-                                                    <?php if(strtoupper($s->level) == "TERKONFIRMASI"){ ?>
-                                                    <span class="badge badge-primary red lighten-1 r-20" style="font-size: 12px;">TERKONFIRMASI</span>
-                                                    <?php } else if(strtoupper($s->level) == "SUSPEK"){ ?>
-                                                    <span class="badge badge-primary amber darken-2 r-20" style="font-size: 12px;">SUSPEK</span>
-                                                    <?php } else if(strtoupper($s->level) == "PROBABLE"){ ?>
-                                                    <span class="badge badge-primary yellow darken-1 r-20" style="font-size: 12px;">PROBABLE</span>
-                                                    <?php } else if(strtoupper($s->level) == "KONTAK_ERAT"){ ?>
-                                                    <span class="badge badge-primary blue lighten-1 r-20" style="font-size: 12px;">KONTAK ERAT</span>
-                                                    <?php } else if(strtoupper($s->level) == "PELAKU_PERJALANAN"){ ?>
-                                                    <span class="badge badge-primary purple lighten-1 r-20" style="font-size: 12px;">PELAKU PERJALANAN</span>
+                                                    <?php if($s->kelompok == "Guru"){ ?>
+                                                    <span class="badge badge-primary red lighten-1 r-20" style="font-size: 12px;">Guru</span>
+                                                    <?php } else if($s->kelompok == "Lansia"){ ?>
+                                                    <span class="badge badge-primary amber darken-2 r-20" style="font-size: 12px;">Lansia</span>
+                                                    <?php } else if($s->kelompok == "Nakes"){ ?>
+                                                    <span class="badge badge-primary yellow darken-1 r-20" style="font-size: 12px;">Nakes</span>
+                                                    <?php } else if($s->kelompok == "Wartawan"){ ?>
+                                                    <span class="badge badge-primary blue lighten-1 r-20" style="font-size: 12px;">Wartawan</span>
+                                                    <?php } else if($s->kelompok == "Masyarakat"){ ?>
+                                                    <span class="badge badge-primary purple lighten-1 r-20" style="font-size: 12px;">Masyarakat</span>
                                                     <?php } ?>
                                                 </td>
-                                                <td><?= $s->level_status ?></td>
+                                                <td><?php
+                                                    if(isset($s->tgl_vaksinasi2)){
+                                                        echo "Vaksinasi Tahap 2";
+                                                    } else {
+                                                        echo "Vaksinasi Tahap 1";
+                                                    }
+                                                ?></td>
                                                 <?php if($user_now->level == 'admin' || $user_now->level == 'master-admin'){ ?>
                                                 <td><?= $s->kecamatan ?></td>
                                                 <?php } ?>
                                                 <td><?= $s->kelurahan ?></td>
                                                 <td>
-                                                   <a href="<?= base_url()?>user/edit/<?= $s->_id?>"><button type="button" class="btn  btn-xs btn-warning r-20"><i class="icon-pencil"></i> Edit</button></a>
-                                                   <a href="<?= base_url()?>user/delete/<?= $s->_id?>" class="btn-delete"><button type="button" class="btn  btn-xs btn-danger r-20 "><i class="icon-trash"></i> Hapus</button></a>
+                                                   <a href="<?= base_url()?>vaksin/edit/<?= $s->_id?>"><button type="button" class="btn  btn-xs btn-warning r-20"><i class="icon-pencil"></i> Edit</button></a>
+                                                   <a href="<?= base_url()?>vaksin/delete/<?= $s->_id?>" class="btn-delete"><button type="button" class="btn  btn-xs btn-danger r-20 "><i class="icon-trash"></i> Hapus</button></a>
                                                 </td>
                                             </tr>
                                             <?php } ?>
@@ -227,38 +198,8 @@
 <?php include('footer.php'); ?> 
 
 <script>
-    level_status = JSON.parse('<?php echo JSON_encode($level_status);?>');
-    console.log(level_status);
     kecamatan = JSON.parse('<?php echo JSON_encode($kecamatan);?>');
     console.log(kecamatan);
-    <?php
-        if((strtoupper($lvl) != "TERKONFIRMASI")){
-            echo '$("#form_gejala").hide();';
-        }
-    ?>
-    $("#level").on('change', function() {
-        var level = $(this).find(":selected").val();
-        if(level){
-            var level_item = level_status[level];
-            var i;
-            var text='<option value="" >-- Semua --</option>';
-            for (i = 0; i < level_item.length; i++) {
-              text += '<option value="'+level_item[i]+'" >'+level_item[i]+'</option>';
-            }
-            console.log(text);
-            $("#level_status").html(text);
-            if(level == 'terkonfirmasi'){
-                $("#form_gejala").show();
-            } else {
-                $("#form_gejala").hide();
-            }    
-        } else {
-            var text='<option value="" >-- Semua --</option>';
-            $("#level_status").html(text);
-            $("#form_gejala").hide();
-        }
-            
-    });
     $("#kecamatan").on('change', function() {
         var level = $(this).find(":selected").val();
         var level_item = kecamatan[level];

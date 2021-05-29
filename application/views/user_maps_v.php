@@ -39,7 +39,7 @@
                                             <label for="inputName" class="col-form-label">Kondisi</label>
                                             <select  class="form-control" name="lvl" id="level" >
                                                 <option value="" >-- Semua --</option>
-                                                <option value="konfirmasi" <?= (strtoupper($lvl) == "TERKONFIRMASI")?"selected":""; ?> >Terkonfirmasi</option>
+                                                <option value="terkonfirmasi" <?= (strtoupper($lvl) == "TERKONFIRMASI")?"selected":""; ?> >Terkonfirmasi</option>
                                                 <option value="suspek" <?= (strtoupper($lvl) == "SUSPEK")?"selected":""; ?> >Suspek</option>
                                                 <option value="probable" <?= (strtoupper($lvl) == "PROBABLE")?"selected":""; ?> >Probable</option>
                                                 <option value="kontak_erat" <?= (strtoupper($lvl) == "KONTAK_ERAT")?"selected":""; ?> >Kontak Erat</option>
@@ -54,8 +54,8 @@
                                             <option value="" >-- Semua --</option>
                                             <?php 
                                                 $list = array();
-                                                if((strtoupper($lvl) == "KONFIRMASI"))
-                                                    $list = $level_status['konfirmasi'];   
+                                                if((strtoupper($lvl) == "TERKONFIRMASI"))
+                                                    $list = $level_status['terkonfirmasi'];   
                                                 if((strtoupper($lvl) == "SUSPEK"))
                                                     $list = $level_status['suspek'];
                                                 if((strtoupper($lvl) == "PROBABLE"))
@@ -169,14 +169,14 @@
       // Maps 
       var maps = L.tileLayer('https://cartodb-basemaps-{s}.global.ssl.fastly.net/dark_all/{z}/{x}/{y}.png', { 
       //var maps = L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { 
-            //attribution: 'Data Â© <a href="http://sampangkab.go.id">SIM PUPR Kabupaten sampang</a>',
+            //attribution: 'Data © <a href="http://sampangkab.go.id">SIM PUPR Kabupaten sampang</a>',
             maxZoom: 18,
             minZoom: 10,
             id: 'mapbox.streets',
             accessToken: 'pk.eyJ1IjoiYWRlc3VsYWltYW4iLCJhIjoiY2prcWFqcW85MW00YzNsbW54ZThscmpvdSJ9.ai7YM6Pj5ayquazYjHnOCA'
           }),
         satelit = L.tileLayer('https://api.mapbox.com/styles/v1/mapbox/satellite-v9/tiles/256/{z}/{x}/{y}?access_token={accessToken}', { 
-            //attribution: 'Data Â© <a href="http://sampangkab.go.id">SIM PUPR Kabupaten sampang</a>',
+            //attribution: 'Data © <a href="http://sampangkab.go.id">SIM PUPR Kabupaten sampang</a>',
             maxZoom: 18,
             minZoom: 10,
             accessToken: 'pk.eyJ1IjoiYWRlc3VsYWltYW4iLCJhIjoiY2prcWFqcW85MW00YzNsbW54ZThscmpvdSJ9.ai7YM6Pj5ayquazYjHnOCA'
@@ -195,22 +195,29 @@
       level_status = JSON.parse('<?php echo JSON_encode($level_status);?>');
       console.log(level_status);
       <?php
-        if((strtoupper($lvl) != "KONFIRMASI")){
-          echo '$("#form_gejala").hide();';
+        if((strtoupper($lvl) != "TERKONFIRMASI")){
+            echo '$("#form_gejala").hide();';
         }
       ?>
       $("#level").on('change', function() {
           var level = $(this).find(":selected").val();
-          var level_item = level_status[level];
-          var i;
-          var text='<option value="" >-- Semua --</option>';
-          for (i = 0; i < level_item.length; i++) {
-            text += '<option value="'+level_item[i]+'" >'+level_item[i]+'</option>';
-          }
-          $("#level_status").html(text);
-          if(level == 'konfirmasi'){
-              $("#form_gejala").show();
+          if(level){
+              var level_item = level_status[level];
+              var i;
+              var text='<option value="" >-- Semua --</option>';
+              for (i = 0; i < level_item.length; i++) {
+                text += '<option value="'+level_item[i]+'" >'+level_item[i]+'</option>';
+              }
+              console.log(text);
+              $("#level_status").html(text);
+              if(level == 'terkonfirmasi'){
+                  $("#form_gejala").show();
+              } else {
+                  $("#form_gejala").hide();
+              }    
           } else {
+              var text='<option value="" >-- Semua --</option>';
+              $("#level_status").html(text);
               $("#form_gejala").hide();
           }
       });

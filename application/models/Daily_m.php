@@ -28,7 +28,7 @@ class daily_m extends My_Model{
 	}
 
 	function search($data){
-		$url = $this->config->item('url_node')."daily/search/";				
+		$url = $this->config->item('url_node')."daily/search/";		
 		return json_decode($this->sendPost($url,$data));
 	}
 

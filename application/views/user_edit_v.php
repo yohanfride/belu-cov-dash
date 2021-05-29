@@ -62,6 +62,17 @@
                                         <input type="text" class="form-control" id="inputName" placeholder="Type Name"  name="name"  value="<?= $data->nama?>" required>
                                     </div>
                                     <div class="form-group">
+                                        <label for="inputPhone" class="col-form-label">Tanggal Awal Pemantauan</label>
+                                        <div class="input-group focused">
+                                            <input type="text" class="date-time-picker form-control" data-options="{&quot;timepicker&quot;:false, &quot;format&quot;:&quot;Y-m-d&quot;}" name="date_add" placeholder="Tahun - Bulan - Tanggal (yyyy-mm-dd)" value="<?=  (!empty($data->tgl_pemantauan_start))?date( "Y-m-d", strtotime( $data->tgl_pemantauan_start)):'' ?>">
+                                            <span class="input-group-append">
+                                                <span class="input-group-text add-on white">
+                                                    <i class="icon-calendar"></i>
+                                                </span>
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
                                         <label for="inputName" class="col-form-label">Status Pemantauan <span class="text-danger small ml-3">*)Data dimasukkan ke proses rekapitulasi</span> </label>
                                         <select id="inputState" class="form-control" name="jenis_kelamin" id="jenis_kelamin" required>
                                             <option <?= ($data->status_pantau == 1)?"selected":""; ?> value="laki-laki">Aktif (Data Dalam Pemantauan)</option>
@@ -71,7 +82,7 @@
                                     <div class="form-group">
                                         <label for="inputName" class="col-form-label">Kondisi</label>
                                         <select  class="form-control" name="level" id="level" required>
-                                            <option value="konfirmasi" <?= (strtoupper($data->level) == "TERKONFIRMASI")?"selected":""; ?> >Terkonfirmasi</option>
+                                            <option value="terkonfirmasi" <?= (strtoupper($data->level) == "TERKONFIRMASI")?"selected":""; ?> >Terkonfirmasi</option>
                                             <option value="suspek" <?= (strtoupper($data->level) == "SUSPEK")?"selected":""; ?> >Suspek</option>
                                             <option value="probable" <?= (strtoupper($data->level) == "PROBABLE")?"selected":""; ?> >Probable</option>
                                             <option value="kontak_erat" <?= (strtoupper($data->level) == "KONTAK_ERAT")?"selected":""; ?> >Kontak Erat</option>
@@ -226,10 +237,10 @@
     //     <?php } ?>
     // }  
     // //Depending on what I use it for I sometimes parse the json so I can work with a straight forward array:
-    // level_status = JSON.parse('<?php echo JSON_encode($level_status);?>');
-    // console.log(level_status);
-    // kecamatan = JSON.parse('<?php echo JSON_encode($kecamatan);?>');
-    // console.log(kecamatan);
+    level_status = JSON.parse('<?php echo JSON_encode($level_status);?>');
+    console.log(level_status);
+    kecamatan = JSON.parse('<?php echo JSON_encode($kecamatan);?>');
+    console.log(kecamatan);
 
     <?php
         if((strtoupper($data->level) != "TERKONFIRMASI")){

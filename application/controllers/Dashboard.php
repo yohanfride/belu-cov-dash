@@ -41,7 +41,9 @@ class dashboard extends CI_Controller {
 				$data['new'] = $this->daily_m->today()->data;
 			} else {
 				$yesterday = date('Y-n-j',strtotime($data['str_date']));
-				$data['new'] = $this->daily_m->search(array('date_only'=>$yesterday))->data;
+				$data['new'] = $this->daily_m->search(array('date_only'=>$yesterday));
+				print_r($data['new']);
+				exit();
 				if(!$data['new']){
 					$data['error_found'] = true;
 				} else {
